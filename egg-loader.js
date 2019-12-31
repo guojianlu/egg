@@ -72,7 +72,7 @@ function loadConfig(app) {
     if (conf['middleware']) {
       conf['middleware'].forEach(mid => {
         const midPath = path.resolve(__dirname, 'middleware', mid);
-        app.$app.use(require(midPath));
+        app.$app.use(require(midPath)(app));
       })
     }
   })
@@ -86,4 +86,13 @@ function loadSchedule() {
   })
 }
 
-module.exports = { initRouter, initController, initService, loadConfig, loadSchedule }
+function loadExtend(app) {
+  load('extend', (filename, extendObj) => {
+    if (filename === 'helper') {
+      app.$app.context[filename] = extendObj
+    }
+    // 还可能需要扩展其他对象
+  })
+}
+
+module.exports = { initRouter, initController, initService, loadConfig, loadSchedule, loadExtend }

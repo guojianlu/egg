@@ -1,9 +1,11 @@
 const Koa = require('koa')
-const { initRouter, initController, initService, loadConfig, loadSchedule } = require('./egg-loader')
+const { initRouter, initController, initService, loadConfig, loadSchedule, loadExtend } = require('./egg-loader')
 
 class Egg {
   constructor(conf) {
     this.$app = new Koa(conf)
+
+    loadExtend(this)
 
     loadConfig(this)
 

@@ -7,4 +7,4 @@ module.exports = {
   options: {
     timestamps: false
   }
-};
+}
