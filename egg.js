@@ -1,8 +1,11 @@
 const Koa = require('koa')
 const { initRouter, initController, initService, loadConfig, loadSchedule, loadExtend } = require('./egg-loader')
+const EventEmitter = require('./events/EventEmitter')
 
-class Egg {
+class Egg extends EventEmitter {
   constructor(conf) {
+    super()
+    
     this.$app = new Koa(conf)
 
     loadExtend(this)
